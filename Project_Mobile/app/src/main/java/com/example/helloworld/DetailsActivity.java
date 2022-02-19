@@ -12,6 +12,7 @@ import com.example.helloworld.databinding.ActivityMainBinding;
 public class DetailsActivity extends AppCompatActivity {
 
     ActivityDetailsBinding binding;
+    String index = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,6 +24,7 @@ public class DetailsActivity extends AppCompatActivity {
         if(intent != null)
         {
             String data = intent.getStringExtra("number");
+            index = intent.getStringExtra("index");
             binding.tvDetail.setText(data);
         }
 
@@ -31,7 +33,8 @@ public class DetailsActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //intent.putExtra("numberInEdit", binding.etDetails.getText());
                 Intent intent = new Intent();
-                intent.putExtra("numberInEdit", binding.etDetails.getText());
+                intent.putExtra("numberInEdit", binding.etDetails.getText().toString());
+                intent.putExtra("indexToEdit", index);
                 setResult(RESULT_OK, intent);
                 finish();
             }

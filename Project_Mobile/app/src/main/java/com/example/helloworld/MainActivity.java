@@ -1,9 +1,15 @@
 package com.example.helloworld;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContract;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -23,12 +29,17 @@ public class MainActivity extends AppCompatActivity {
 //    private TextView tvCount;
 //    private FloatingActionButton btnUp;
 //    private FloatingActionButton btnDown;
+    // lấy kết quả trả về
     private static final int SECOND_ACTIVITY_REQUEST_CODE = 0;
+    private static final int REQUEST_CODE_EXAMPLE = 0x9345;
     private ActivityMainBinding binding;
     private MyViewModel model;
 
     private ArrayAdapter<String> arrayAdapter;
     private ArrayList<String> arrayList;
+
+    ActivityResultLauncher<Intent> takeNumber;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +66,28 @@ public class MainActivity extends AppCompatActivity {
                 arrayAdapter.notifyDataSetChanged();
             }
         });
+
+        takeNumber = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        if (result.getResultCode() == Activity.RESULT_OK && result != null) {
+                            if(result.getData() != null && result.getData().getStringExtra("numberInEdit") != null && result.getData().getStringExtra("indexToEdit") != null)
+                            {
+                                Intent data = result.getData();
+                                // your operation....
+                                String Res = data.getStringExtra("numberInEdit");
+                                String index = data.getStringExtra("indexToEdit");
+                                // Sử dụng kết quả result bằng cách hiện Toast
+                                arrayList.set(Integer.parseInt(index), Res);
+                                //binding.tvCount.setText(result.getData().getStringExtra("numberInEdit").toString());
+                                arrayAdapter.notifyDataSetChanged();
+                            }
+                                //binding.tvCount.setText(result.getData().toString());
+                        }
+                    }
+                });
 
 //        tvCount = findViewById(R.id.tv_count);
 //        btnUp = findViewById(R.id.btn_up);
@@ -90,26 +123,41 @@ public class MainActivity extends AppCompatActivity {
         binding.lvCount.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
-                intent.putExtra("number", arrayList.get(i));
-                //startActivity(intent);
-                startActivityForResult(intent, int requestCode);
+                  Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
+                  intent.putExtra("number", arrayList.get(i));
+                  intent.putExtra("index", String.valueOf(i));
+                  takeNumber.launch(intent);
+                  //takeNumber.launch(intent);
+                  //startActivityForResult(intent, REQUEST_CODE_EXAMPLE);
 
             }
         });
 
-        @Override
-        protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-            super.onActivityResult(requestCode, resultCode, data);
 
-            if(resultCode == RESULT_OK){
-                if(requestCode == REQUEST_CODE && data !=null) {
-                    String strMessage = data.getStringExtra("keyName");
-                    Log.i(TAG, "onActivityResult: message >>" + strMessage);
-                }
-            }
-
-        }
 
     }
+
+    // Khi kết quả được trả về từ Activity khác, hàm onActivityResult sẽ được gọi.
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        // Kiểm tra requestCode có trùng với REQUEST_CODE vừa dùng
+//        if(requestCode == REQUEST_CODE_EXAMPLE) {
+//
+//            // resultCode được set bởi DetailActivity
+//            // RESULT_OK chỉ ra rằng kết quả này đã thành công
+//            if(resultCode == Activity.RESULT_OK) {
+//                // Nhận dữ liệu từ Intent trả về
+//                String result = data.getStringExtra("numberInEdit");
+//                String index = data.getStringExtra("indexToEdit");
+//                // Sử dụng kết quả result bằng cách hiện Toast
+//                arrayList.set(Integer.parseInt(index), result);
+//                binding.tvCount.setText(index);
+//                arrayAdapter.notifyDataSetChanged();
+//            } else {
+//                // DetailActivity không thành công, không có data trả về.
+//
+//            }
+//        }
+//    }
 }
