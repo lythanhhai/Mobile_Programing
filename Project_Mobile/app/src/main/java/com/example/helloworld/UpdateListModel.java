@@ -13,14 +13,19 @@ public class UpdateListModel extends ViewModel {
             arrayList = new MutableLiveData<ArrayList<String>>();
             ArrayList<String> arrList = new ArrayList<String>();
             arrList.add("0");
+            //arrList.add("1");
             arrayList.setValue(arrList);
         }
         return arrayList;
     }
 
-    public void updateList(ArrayList<String> arrList, int index, String value) {
-        // Do an asynchronous operation to fetch users.
-        arrList.set(index, value);
-        arrayList.setValue(arrList);
+    public void addToList(String value) {
+
+        ArrayList<String> arr = arrayList.getValue();
+        //ArrayList<String> arr = new ArrayList<String>();
+        //arr.add("343443");
+        //arr.add("24453");
+        arr.add(value);
+        arrayList.setValue(arr);
     }
 }
