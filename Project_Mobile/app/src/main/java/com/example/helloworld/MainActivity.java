@@ -34,8 +34,10 @@ public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_EXAMPLE = 0x9345;
     private ActivityMainBinding binding;
     private MyViewModel model;
+    private UpdateListModel listModel;
 
     private ArrayAdapter<String> arrayAdapter;
+    private ArrayAdapter<String> arrayAdapter1;
     private ArrayList<String> arrayList;
 
     ActivityResultLauncher<Intent> takeNumber;
@@ -57,12 +59,29 @@ public class MainActivity extends AppCompatActivity {
 
 
         model = new ViewModelProvider(this).get(MyViewModel.class);
+        listModel = new ViewModelProvider(this).get(UpdateListModel.class);
+        //listModel = new ViewModelProvider()
+        //listModel = ViewModelProviders.of(getActivity()).get(UpdateListModel.class);
 
         model.getNumber().observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(Integer integer) {
                 binding.tvCount.setText("" + integer);
                 arrayList.add("" + integer);
+                arrayAdapter.notifyDataSetChanged();
+            }
+        });
+
+        listModel.getNumber().observe(this, new Observer<ArrayList<String>>() {
+            @Override
+            public void onChanged(ArrayList<String> list) {
+
+                arrayList.clear();
+                for(int i = 0; i < list.size(); i++)
+                {
+                    arrayList.add(list.get(i));
+                }
+
                 arrayAdapter.notifyDataSetChanged();
             }
         });
@@ -99,6 +118,8 @@ public class MainActivity extends AppCompatActivity {
 //                int count = Integer.parseInt(binding.tvCount.getText().toString());
 //                binding.tvCount.setText("" + ++count);
                   model.increaseNumber();
+                  int current = Integer.parseInt(binding.tvCount.getText().toString());
+                  listModel.addToList(String.valueOf(current));
             }
         });
 
