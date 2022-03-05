@@ -37,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
     private UpdateListModel listModel;
 
     private ArrayAdapter<String> arrayAdapter;
-    private ArrayAdapter<String> arrayAdapter1;
     private ArrayList<String> arrayList;
 
     ActivityResultLauncher<Intent> takeNumber;
@@ -60,8 +59,6 @@ public class MainActivity extends AppCompatActivity {
 
         model = new ViewModelProvider(this).get(MyViewModel.class);
         listModel = new ViewModelProvider(this).get(UpdateListModel.class);
-        //listModel = new ViewModelProvider()
-        //listModel = ViewModelProviders.of(getActivity()).get(UpdateListModel.class);
 
         model.getNumber().observe(this, new Observer<Integer>() {
             @Override
@@ -108,15 +105,9 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-//        tvCount = findViewById(R.id.tv_count);
-//        btnUp = findViewById(R.id.btn_up);
-//        btnDown = findViewById(R.id.btn_down);
-
         binding.btnUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                int count = Integer.parseInt(binding.tvCount.getText().toString());
-//                binding.tvCount.setText("" + ++count);
                   model.increaseNumber();
                   int current = Integer.parseInt(binding.tvCount.getText().toString());
                   listModel.addToList(String.valueOf(current));
