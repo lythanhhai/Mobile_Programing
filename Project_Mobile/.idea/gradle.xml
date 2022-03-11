@@ -11,6 +11,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/contactapp1911" />
             <option value="$PROJECT_DIR$/mycalculator" />
             <option value="$PROJECT_DIR$/twonumbers" />
           </set>
