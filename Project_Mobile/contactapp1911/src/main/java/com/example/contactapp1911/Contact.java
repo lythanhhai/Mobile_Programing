@@ -1,18 +1,25 @@
 package com.example.contactapp1911;
 
-public class Contact {
-    private int id;
-    private String name;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
-    public Contact(int id, String name, String mobile, String email) {
-        this.id = id;
+@Entity
+public class Contact {
+    @PrimaryKey (autoGenerate = true)
+    private int id;
+    @ColumnInfo
+    private String name;
+    @ColumnInfo
+    private String mobile;
+    @ColumnInfo
+    private String email;
+
+    public Contact(String name, String mobile, String email) {
         this.name = name;
         this.mobile = mobile;
         this.email = email;
     }
-
-    private String mobile;
-    private String email;
 
     public int getId() {
         return id;
