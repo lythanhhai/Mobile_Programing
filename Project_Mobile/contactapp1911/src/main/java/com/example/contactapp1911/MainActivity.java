@@ -11,6 +11,7 @@ import android.view.View;
 import com.example.contactapp1911.databinding.ActivityMainBinding;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,17 +29,22 @@ public class MainActivity extends AppCompatActivity {
 
         appDatabase = AppDatabase.getInstance(this);
         contactDao = appDatabase.contactDao();
+        contacts = new ArrayList<Contact>();
 
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
+                List<Contact> list = contactDao.getAllContacts();
+                list.clear();
                 Contact user1 = new Contact("Nguyen Van A", "1234565", "nva@gmail.com");
                 contactDao.insertAll(user1);
+                for(int i = 0; i < list.size(); i++)
+                {
+                    contacts.add(list.get(i));
+                }
             }
         });
 
-
-        contacts = new ArrayList<Contact>();
 //        contacts.add(new Contact("Nguyen Van A", "1234565", "nva@gmail.com"));
 //        contacts.add(new Contact("Nguyen Van B", "5345345", "nvb@gmail.com"));
 //        contacts.add(new Contact("Nguyen Van C", "6235435", "nvc@gmail.com"));
