@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HelloWorld">
         <activity
+            android:name=".Add_Contact"
+            android:exported="false" />
+        <activity
             android:name=".Contact_item"
             android:exported="false" />
         <activity

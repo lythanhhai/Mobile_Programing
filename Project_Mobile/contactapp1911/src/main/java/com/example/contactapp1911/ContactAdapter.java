@@ -41,6 +41,18 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
         return Contacts.size();
     }
 
+    public ArrayList<Contact> getItemByName(String name) {
+        ArrayList<Contact> contactSearch = new ArrayList<Contact>();
+        for(int i = 0; i < Contacts.size(); i++)
+        {
+            if(Contacts.get(i).getName().contains(name))
+            {
+                contactSearch.add(Contacts.get(i));
+            }
+        }
+        return contactSearch;
+    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         private TextView tv_name;
