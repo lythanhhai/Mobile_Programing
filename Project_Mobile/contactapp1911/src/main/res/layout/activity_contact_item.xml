@@ -29,6 +29,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="Fullname"
+            android:layout_marginLeft="10dp"
+            android:textSize="10dp"
             >
 
         </TextView>
