@@ -32,6 +32,7 @@
 
         </ImageView>
         <EditText
+            android:id="@+id/et_name"
             android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
@@ -54,6 +55,7 @@
 
         </ImageView>
         <EditText
+            android:id="@+id/et_phone"
             android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
@@ -76,6 +78,7 @@
 
         </ImageView>
         <EditText
+            android:id="@+id/et_email"
             android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
@@ -84,7 +87,9 @@
 
         </EditText>
     </LinearLayout>
+
     <Button
+        android:id="@+id/btn_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Add"
