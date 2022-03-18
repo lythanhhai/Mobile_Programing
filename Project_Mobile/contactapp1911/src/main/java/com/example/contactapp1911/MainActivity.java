@@ -5,7 +5,6 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.loader.content.AsyncTaskLoader;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.app.Activity;
@@ -16,7 +15,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.SearchView;
 
 import com.example.contactapp1911.databinding.ActivityMainBinding;
@@ -88,7 +86,6 @@ public class MainActivity extends AppCompatActivity {
                                 String email = data.getStringExtra("email");
                                 // Sử dụng kết quả result bằng cách hiện Toast
                                 binding.textView.setText("");
-                                //List<Contact> list1 = contactDao.getAllContacts();
                                 AsyncTask.execute(new Runnable() {
                                     @Override
                                     public void run() {
@@ -110,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
                 });
 
 
-
+        // add
         binding.btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -118,6 +115,24 @@ public class MainActivity extends AppCompatActivity {
                 getInfoNewContact.launch(intent);
             }
         });
+
+        // clcik item -> detail contact
+        binding.rvContact.addOnItemTouchListener(new RecycleItemListener(getApplicationContext(), binding.rvContact, new RecycleItemListener.ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                Intent intent = new Intent(MainActivity.this, DetailContact.class);
+                Contact user = contacts.get(position);
+                intent.putExtra("name", user.getName());
+                intent.putExtra("phone", user.getMobile());
+                intent.putExtra("email", user.getEmail());
+                startActivity(intent);
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+        }));
 
         }
 
