@@ -49,13 +49,13 @@ public class MainActivity extends AppCompatActivity {
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
-                contactDao.nullTable();
-                Contact user1 = new Contact("Nguyen Van A", "0945443534", "nva@gmail.com");
-                Contact user2 = new Contact("Ho Van B", "0845443454", "hvb@gmail.com");
-                Contact user3 = new Contact("Tran Van C", "0545465534", "tvc@gmail.com");
-                contactDao.insertAll(user1);
-                contactDao.insertAll(user2);
-                contactDao.insertAll(user3);
+//                contactDao.nullTable();
+//                Contact user1 = new Contact("Nguyen Van A", "0945443534", "nva@gmail.com");
+//                Contact user2 = new Contact("Ho Van B", "0845443454", "hvb@gmail.com");
+//                Contact user3 = new Contact("Tran Van C", "0545465534", "tvc@gmail.com");
+//                contactDao.insertAll(user1);
+//                contactDao.insertAll(user2);
+//                contactDao.insertAll(user3);
                 List<Contact> list = contactDao.getAllContacts();
                 for(int i = 0; i < list.size(); i++)
                 {
@@ -87,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
                                 String email = data.getStringExtra("email");
                                 // Sử dụng kết quả result bằng cách hiện Toast
                                 binding.textView.setText("");
+                                //binding.rvContact.setAdapter(contactsAdapter);
                                 AsyncTask.execute(new Runnable() {
                                     @Override
                                     public void run() {
@@ -126,6 +127,7 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra("name", user.getName());
                 intent.putExtra("phone", user.getMobile());
                 intent.putExtra("email", user.getEmail());
+                intent.putExtra("id", String.valueOf(user.getId()));
                 startActivity(intent);
             }
 

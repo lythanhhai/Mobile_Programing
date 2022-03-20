@@ -20,9 +20,8 @@ public class DetailContact extends AppCompatActivity {
     String name = "";
     String phone = "";
     String email = "";
+    int id = -1;
     ActivityResultLauncher<Intent> getInfoNewContactEdit;
-    private AppDatabase appDatabase;
-    private ContactDao contactDao;
 
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
@@ -31,19 +30,16 @@ public class DetailContact extends AppCompatActivity {
         {
             if(resultCode == RESULT_OK)
             {
-                appDatabase = AppDatabase.getInstance(this);
-                contactDao = appDatabase.contactDao();
-
                 String name1 = data.getStringExtra("name");
                 String phone1 = data.getStringExtra("phone");
                 String email1 = data.getStringExtra("email");
 
-                //Contact user = new Contact(name1, phone1, email1);
-                //contactDao.updateContact(user);
-
                 binding.tvName.setText(name1);
                 binding.tvPhone.setText(phone1);
                 binding.tvEmail.setText(email1);
+                name = binding.tvName.getText().toString();
+                phone = binding.tvPhone.getText().toString();
+                email = binding.tvEmail.getText().toString();
             }
         }
     }
@@ -63,6 +59,7 @@ public class DetailContact extends AppCompatActivity {
             name = intent.getStringExtra("name");
             phone = intent.getStringExtra("phone");
             email = intent.getStringExtra("email");
+            id = Integer.parseInt(intent.getStringExtra("id"));
             binding.tvName.setText(name);
             binding.tvPhone.setText(phone);
             binding.tvEmail.setText(email);
@@ -75,6 +72,7 @@ public class DetailContact extends AppCompatActivity {
                 intent.putExtra("name", name);
                 intent.putExtra("phone", phone);
                 intent.putExtra("email", email);
+                intent.putExtra("id", String.valueOf(id));
                 startActivityForResult(intent, 1);
             }
         });
