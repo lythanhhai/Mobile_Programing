@@ -18,6 +18,7 @@
         >
 
         <ImageView
+            android:id="@+id/im_avatar"
             android:layout_width="300dp"
             android:layout_height="300dp"
             android:src="@drawable/person_white"
@@ -26,6 +27,7 @@
 
         </ImageView>
         <ImageView
+            android:id="@+id/btn_photo"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@drawable/add_photo_white"

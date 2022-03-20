@@ -29,4 +29,7 @@ public interface ContactDao {
 
     @Update
     void updateContact(Contact contact);
+
+    @Query("Update Contact set name = :name, mobile = :phone, email = :email where id = :id")
+    void updateContactByID(int id, String name, String phone, String email);
 }
