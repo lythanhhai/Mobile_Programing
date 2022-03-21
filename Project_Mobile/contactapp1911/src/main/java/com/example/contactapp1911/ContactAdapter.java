@@ -1,6 +1,7 @@
 package com.example.contactapp1911;
 
 import android.media.Image;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +35,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ContactAdapter.ViewHolder holder, int position) {
         holder.tv_name.setText(Contacts.get(position).getName());
+        //holder.iv_avatar.setImageURI(Uri.parse(Contacts.get(position).getUrl()));
     }
 
     @Override
@@ -62,7 +64,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
             super(view);
 
             tv_name = view.findViewById(R.id.tv_name);
-            iv_avatar = view.findViewById(R.id.iv_avatar);
+            iv_avatar = view.findViewById(R.id.avatar);
         }
     }
 }

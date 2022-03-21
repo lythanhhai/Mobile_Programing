@@ -57,7 +57,7 @@ public class DogsAdapter extends RecyclerView.Adapter<DogsAdapter.ViewHolder>{
         holder.getDescription().setText(dogs.get(position).getBredFor());
         Picasso.get()
                 .load(dogs.get(position).getUrl())
-                .placeholder(R.drawable.ic_baseline_photo_24)
+                .placeholder(R.drawable.ic_baseline_image_24)
                 .fit()
                 .into(holder.getImage());
     }

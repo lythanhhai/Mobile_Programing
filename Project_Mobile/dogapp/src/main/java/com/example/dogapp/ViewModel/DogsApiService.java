@@ -11,21 +11,41 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DogsApiService {
+//    private static final String BASE_URL = "https://raw.githubusercontent.com/";
+//    private static DogsApi api;
+//
+//    public DogsApiService()
+//    {
+//        api = new Retrofit.Builder()
+//                .baseUrl(BASE_URL)
+//                .addConverterFactory(GsonConverterFactory.create())
+//                .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
+//                .build()
+//                .create(DogsApi.class);
+//    }
+//
+//    public Single<List<DogBreed>> getDogs()
+//    {
+//        return api.getDogs();
+//    }
     private static final String BASE_URL = "https://raw.githubusercontent.com/";
     private static DogsApi api;
 
-    public DogsApiService()
-    {
-        api = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
-                .build()
-                .create(DogsApi.class);
+    public static DogsApi getApi() {
+        if(api == null) {
+            api = new Retrofit.Builder()
+                    .baseUrl(BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
+                    .build()
+                    .create(DogsApi.class);
+        }
+        return api;
     }
 
-    public Single<List<DogBreed>> getDogs()
-    {
+    public DogsApiService() {}
+
+    public Single<List<DogBreed>> getDogs() {
         return api.getDogs();
     }
 }
