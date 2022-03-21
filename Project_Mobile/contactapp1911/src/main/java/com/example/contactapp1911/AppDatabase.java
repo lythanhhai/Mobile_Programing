@@ -12,6 +12,7 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract ContactDao contactDao();
     private static AppDatabase instance;
 
+
     public static AppDatabase getInstance(Context context)
     {
         if(instance == null)

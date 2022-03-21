@@ -85,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
                                 String name = data.getStringExtra("name");
                                 String phone = data.getStringExtra("phone");
                                 String email = data.getStringExtra("email");
+                                //String url = data.getStringExtra("url");
                                 // Sử dụng kết quả result bằng cách hiện Toast
                                 binding.textView.setText("");
                                 //binding.rvContact.setAdapter(contactsAdapter);

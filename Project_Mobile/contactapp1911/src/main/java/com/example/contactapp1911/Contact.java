@@ -14,11 +14,14 @@ public class Contact {
     private String mobile;
     @ColumnInfo
     private String email;
+    @ColumnInfo
+    private String url;
 
     public Contact(String name, String mobile, String email) {
         this.name = name;
         this.mobile = mobile;
         this.email = email;
+        //this.url = url;
     }
 
     public int getId() {
@@ -51,6 +54,14 @@ public class Contact {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
 }
