@@ -1,6 +1,5 @@
 package com.example.contactapp1911;
 
-import android.media.Image;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,9 +14,9 @@ import java.util.ArrayList;
 
 public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHolder>
 {
-    private ArrayList<Contact> Contacts;
+    private ArrayList<Contact1> Contacts;
 
-    public ContactAdapter(ArrayList<Contact> contacts)
+    public ContactAdapter(ArrayList<Contact1> contacts)
     {
         this.Contacts = contacts;
     }
@@ -35,7 +34,15 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ContactAdapter.ViewHolder holder, int position) {
         holder.tv_name.setText(Contacts.get(position).getName());
-        //holder.iv_avatar.setImageURI(Uri.parse(Contacts.get(position).getUrl()));
+        if(String.valueOf(Contacts.get(position).getUrl() == "") == "0")
+        {
+            holder.iv_avatar.setImageResource(R.drawable.ic_baseline_person_24);
+        }
+        else
+        {
+            holder.iv_avatar.setImageURI(Uri.parse(Contacts.get(position).getUrl()));
+
+        }
     }
 
     @Override
@@ -43,8 +50,8 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
         return Contacts.size();
     }
 
-    public ArrayList<Contact> getItemByName(String name) {
-        ArrayList<Contact> contactSearch = new ArrayList<Contact>();
+    public ArrayList<Contact1> getItemByName(String name) {
+        ArrayList<Contact1> contactSearch = new ArrayList<Contact1>();
         for(int i = 0; i < Contacts.size(); i++)
         {
             if(Contacts.get(i).getName().contains(name))

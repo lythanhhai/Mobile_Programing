@@ -39,7 +39,8 @@ public class Add_Contact extends AppCompatActivity {
         binding.btnPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                intent.setType("image/*");
                 startActivityForResult(intent, 1);
             }
         });
