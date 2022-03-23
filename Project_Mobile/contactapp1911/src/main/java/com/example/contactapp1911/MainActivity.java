@@ -9,8 +9,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -19,18 +21,18 @@ import android.widget.SearchView;
 
 import com.example.contactapp1911.databinding.ActivityMainBinding;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
-    private ArrayList<Contact> contacts;
+    private ArrayList<Contact1> contacts;
     private ContactAdapter contactsAdapter;
     private ContactAdapter contactsAdapterSearch;
     private AppDatabase appDatabase;
     private ContactDao contactDao;
-
     ActivityResultLauncher<Intent> getInfoNewContact;
 
 
@@ -44,19 +46,19 @@ public class MainActivity extends AppCompatActivity {
 
         appDatabase = AppDatabase.getInstance(this);
         contactDao = appDatabase.contactDao();
-        contacts = new ArrayList<Contact>();
+        contacts = new ArrayList<Contact1>();
 
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
-//                contactDao.nullTable();
-//                Contact user1 = new Contact("Nguyen Van A", "0945443534", "nva@gmail.com");
-//                Contact user2 = new Contact("Ho Van B", "0845443454", "hvb@gmail.com");
-//                Contact user3 = new Contact("Tran Van C", "0545465534", "tvc@gmail.com");
-//                contactDao.insertAll(user1);
-//                contactDao.insertAll(user2);
-//                contactDao.insertAll(user3);
-                List<Contact> list = contactDao.getAllContacts();
+                contactDao.nullTable();
+                Contact1 user1 = new Contact1("Nguyen Van A", "0945443534", "nva@gmail.com", "");
+                Contact1 user2 = new Contact1("Ho Van B", "0845443454", "hvb@gmail.com", "");
+                Contact1 user3 = new Contact1("Tran Van C", "0545465534", "tvc@gmail.com", "");
+                contactDao.insertAll(user1);
+                contactDao.insertAll(user2);
+                contactDao.insertAll(user3);
+                List<Contact1> list = contactDao.getAllContacts();
                 for(int i = 0; i < list.size(); i++)
                 {
                     contacts.add(list.get(i));
@@ -85,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
                                 String name = data.getStringExtra("name");
                                 String phone = data.getStringExtra("phone");
                                 String email = data.getStringExtra("email");
-                                //String url = data.getStringExtra("url");
+                                String url = data.getStringExtra("url");
                                 // Sử dụng kết quả result bằng cách hiện Toast
                                 binding.textView.setText("");
                                 //binding.rvContact.setAdapter(contactsAdapter);
@@ -93,10 +95,10 @@ public class MainActivity extends AppCompatActivity {
                                     @Override
                                     public void run() {
                                             //contactDao.nullTable();
-                                            Contact userContact = new Contact(name, phone, email);
+                                            Contact1 userContact = new Contact1(name, phone, email, url);
                                             contactDao.insertContact(userContact);
                                             contacts.clear();
-                                            List<Contact> list = contactDao.getAllContacts();
+                                            List<Contact1> list = contactDao.getAllContacts();
                                             for(int i = 0; i < list.size(); i++)
                                             {
                                                 contacts.add(list.get(i));
@@ -124,11 +126,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view, int position) {
                 Intent intent = new Intent(MainActivity.this, DetailContact.class);
-                Contact user = contacts.get(position);
+                Contact1 user = contacts.get(position);
                 intent.putExtra("name", user.getName());
                 intent.putExtra("phone", user.getMobile());
                 intent.putExtra("email", user.getEmail());
                 intent.putExtra("id", String.valueOf(user.getId()));
+                intent.putExtra("url", user.getUrl());
+//                Bundle bundle = new Bundle();
+//                bundle.putSerializable("object_contact", (Serializable) user);
+//                intent.putExtra(bundle);
                 startActivity(intent);
             }
 

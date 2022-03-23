@@ -19,6 +19,7 @@ public class EditContact extends AppCompatActivity {
     String name = "";
     String phone = "";
     String email = "";
+    String url = "";
     int id = -1;
     private AppDatabase appDatabase;
     private ContactDao contactDao;
@@ -39,9 +40,11 @@ public class EditContact extends AppCompatActivity {
             phone = intent.getStringExtra("phone");
             email = intent.getStringExtra("email");
             id = Integer.parseInt(intent.getStringExtra("id"));
+            url = intent.getStringExtra("url");
             binding.etName.setText(name);
             binding.etPhone.setText(phone);
             binding.etEmail.setText(email);
+            //binding.imAvatar.setImageURI(Uri.parse(url));
         }
         // chọn ảnh
         binding.btnPhoto.setOnClickListener(new View.OnClickListener() {
@@ -62,6 +65,7 @@ public class EditContact extends AppCompatActivity {
                 intent.putExtra("name", name);
                 intent.putExtra("phone", phone);
                 intent.putExtra("email", email);
+                intent.putExtra("url", url);
                 AsyncTask.execute(new Runnable() {
                     @Override
                     public void run() {
@@ -84,6 +88,7 @@ public class EditContact extends AppCompatActivity {
             if(resultCode == RESULT_OK)
             {
                 Uri selectedImage = data.getData();
+                url = selectedImage.toString();
                 binding.imAvatar.setImageURI(selectedImage);
             }
         }

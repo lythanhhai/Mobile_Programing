@@ -7,12 +7,26 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.example.contactapp1911.databinding.ActivityAddContactBinding;
 import com.example.contactapp1911.databinding.ActivityDetailContactBinding;
+import com.squareup.picasso.Picasso;
+
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URL;
 
 public class DetailContact extends AppCompatActivity {
 
@@ -20,6 +34,8 @@ public class DetailContact extends AppCompatActivity {
     String name = "";
     String phone = "";
     String email = "";
+    String url = "";
+    Uri uri;
     int id = -1;
     ActivityResultLauncher<Intent> getInfoNewContactEdit;
 
@@ -33,17 +49,29 @@ public class DetailContact extends AppCompatActivity {
                 String name1 = data.getStringExtra("name");
                 String phone1 = data.getStringExtra("phone");
                 String email1 = data.getStringExtra("email");
+                String url1 = data.getStringExtra("url");
 
                 binding.tvName.setText(name1);
                 binding.tvPhone.setText(phone1);
                 binding.tvEmail.setText(email1);
+                binding.imAvatar.setImageURI(Uri.parse(url1));
                 name = binding.tvName.getText().toString();
                 phone = binding.tvPhone.getText().toString();
                 email = binding.tvEmail.getText().toString();
+                url = url1;
             }
         }
     }
 
+    public void getPathFromURI(Uri contentUri) {
+        String[] filePathColumn = { MediaStore.Images.Media.DATA };
+        Cursor cursor = getContentResolver().query(contentUri, filePathColumn, null, null, null);
+        cursor.moveToFirst();
+        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+        String picturePath = cursor.getString(columnIndex);
+        cursor.close();
+        binding.imAvatar.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,10 +88,37 @@ public class DetailContact extends AppCompatActivity {
             phone = intent.getStringExtra("phone");
             email = intent.getStringExtra("email");
             id = Integer.parseInt(intent.getStringExtra("id"));
+            uri = Uri.parse(url);
             binding.tvName.setText(name);
             binding.tvPhone.setText(phone);
             binding.tvEmail.setText(email);
+            //File file = new File(Uri.parse(url));
+
+//            try {
+//                Picasso.get()
+//                        .load(String.valueOf(new URL(uri.toString())))
+//                        .fit()
+//                        .centerCrop()
+//                        .into(binding.imAvatar);
+//            } catch (MalformedURLException e) {
+//                e.printStackTrace();
+//            }
+//            Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), Uri.parse(url));
+//            int nh = (int) (bitmap.getHeight() * (1024.0 / bitmap.getWidth()));
+//            Bitmap scaled = Bitmap.createScaledBitmap(bitmap, 1024, nh, true);
+//            binding.imAvatar.setImageBitmap(scaled);
+            //binding.imAvatar.setImageURI(Uri.parse(getPathFromURI(this, uri)));
+            binding.imAvatar.setImageURI(null);
+            binding.imAvatar.setImageURI(uri);
+//            AsyncTask.execute(new Runnable() {
+//                @Override
+//                public void run() {
+//                    getPathFromURI(uri);
+//                }
+//            });
+
         }
+
 
         binding.btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,6 +128,7 @@ public class DetailContact extends AppCompatActivity {
                 intent.putExtra("phone", phone);
                 intent.putExtra("email", email);
                 intent.putExtra("id", String.valueOf(id));
+                intent.putExtra("url", url);
                 startActivityForResult(intent, 1);
             }
         });

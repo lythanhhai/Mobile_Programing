@@ -5,7 +5,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity
-public class Contact {
+public class Contact1 {
     @PrimaryKey (autoGenerate = true)
     private int id;
     @ColumnInfo
@@ -17,11 +17,11 @@ public class Contact {
     @ColumnInfo
     private String url;
 
-    public Contact(String name, String mobile, String email) {
+    public Contact1(String name, String mobile, String email, String url) {
         this.name = name;
         this.mobile = mobile;
         this.email = email;
-        //this.url = url;
+        this.url = url;
     }
 
     public int getId() {
