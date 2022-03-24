@@ -125,16 +125,17 @@ public class MainActivity extends AppCompatActivity {
         binding.rvContact.addOnItemTouchListener(new RecycleItemListener(getApplicationContext(), binding.rvContact, new RecycleItemListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
-                Intent intent = new Intent(MainActivity.this, DetailContact.class);
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setClass(MainActivity.this, DetailContact.class);
                 Contact1 user = contacts.get(position);
                 intent.putExtra("name", user.getName());
                 intent.putExtra("phone", user.getMobile());
                 intent.putExtra("email", user.getEmail());
                 intent.putExtra("id", String.valueOf(user.getId()));
-                intent.putExtra("url", user.getUrl());
+                intent.putExtra("url", user.getUrl().toString());
 //                Bundle bundle = new Bundle();
-//                bundle.putSerializable("object_contact", (Serializable) user);
-//                intent.putExtra(bundle);
+//                bundle.putSerializable("object_contact", contacts.get(position));
+//                intent.putExtras(bundle);
                 startActivity(intent);
             }
 

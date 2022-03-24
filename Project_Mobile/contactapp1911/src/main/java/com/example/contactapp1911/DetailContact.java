@@ -24,6 +24,9 @@ import com.example.contactapp1911.databinding.ActivityDetailContactBinding;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
@@ -82,40 +85,45 @@ public class DetailContact extends AppCompatActivity {
 
 
         Intent intent = getIntent();
+        Bundle extras = getIntent().getExtras();
+
         if(intent != null)
         {
             name = intent.getStringExtra("name");
             phone = intent.getStringExtra("phone");
             email = intent.getStringExtra("email");
             id = Integer.parseInt(intent.getStringExtra("id"));
-            uri = Uri.parse(url);
+            url = intent.getStringExtra("url");
+            //uri = Uri.parse(url);
+            //Contact1 contact = (Contact1) bundle.get("object_contact");
             binding.tvName.setText(name);
             binding.tvPhone.setText(phone);
             binding.tvEmail.setText(email);
             //File file = new File(Uri.parse(url));
 
+//            String[] filePathColumn = { MediaStore.Images.Media.DATA };
+//            Cursor cursor = getContentResolver().query(Uri.parse(contact.getUrl()),
+//                    filePathColumn, null, null, null);
+//            cursor.moveToFirst();
+//            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+//            String picturePath = cursor.getString(columnIndex);
+//            cursor.close();
+//            binding.imAvatar.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+            //Bitmap map = BitmapFactory.decodeFile(url);
+
+//            Bitmap map = null;
 //            try {
-//                Picasso.get()
-//                        .load(String.valueOf(new URL(uri.toString())))
-//                        .fit()
-//                        .centerCrop()
-//                        .into(binding.imAvatar);
-//            } catch (MalformedURLException e) {
+//                map = MediaStore.Images.Media.getBitmap(getContentResolver(), Uri.parse(url));
+//            } catch (IOException e) {
 //                e.printStackTrace();
 //            }
-//            Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), Uri.parse(url));
-//            int nh = (int) (bitmap.getHeight() * (1024.0 / bitmap.getWidth()));
-//            Bitmap scaled = Bitmap.createScaledBitmap(bitmap, 1024, nh, true);
-//            binding.imAvatar.setImageBitmap(scaled);
-            //binding.imAvatar.setImageURI(Uri.parse(getPathFromURI(this, uri)));
-            binding.imAvatar.setImageURI(null);
-            binding.imAvatar.setImageURI(uri);
-//            AsyncTask.execute(new Runnable() {
-//                @Override
-//                public void run() {
-//                    getPathFromURI(uri);
-//                }
-//            });
+//            binding.imAvatar.setImageBitmap(map);
+            //binding.imAvatar.setImageURI(Uri.parse(url));
+
+//            if (extras != null && extras.containsKey("url")) {
+//                url= extras.getString("url");
+//            }
+//            binding.imAvatar.setImageURI(Uri.parse(url));
 
         }
 
