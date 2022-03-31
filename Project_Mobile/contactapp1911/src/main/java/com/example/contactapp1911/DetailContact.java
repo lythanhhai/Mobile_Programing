@@ -16,6 +16,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -23,6 +24,7 @@ import com.example.contactapp1911.databinding.ActivityAddContactBinding;
 import com.example.contactapp1911.databinding.ActivityDetailContactBinding;
 import com.squareup.picasso.Picasso;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -66,15 +68,25 @@ public class DetailContact extends AppCompatActivity {
         }
     }
 
-    public void getPathFromURI(Uri contentUri) {
-        String[] filePathColumn = { MediaStore.Images.Media.DATA };
-        Cursor cursor = getContentResolver().query(contentUri, filePathColumn, null, null, null);
-        cursor.moveToFirst();
-        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-        String picturePath = cursor.getString(columnIndex);
-        cursor.close();
-        binding.imAvatar.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+    public byte[] getBytesArrayFromURI(Uri uri) {
+        try {
+            InputStream inputStream = getContentResolver().openInputStream(uri);
+            ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
+            int bufferSize = 1024000;
+            byte[] buffer = new byte[bufferSize];
+
+            int len = 0;
+            while ((len = inputStream.read(buffer)) != -1) {
+                byteBuffer.write(buffer, 0, len);
+            }
+            return byteBuffer.toByteArray();
+
+        }catch(Exception e) {
+            Log.d("exception", "Oops! Something went wrong.");
+        }
+        return null;
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,7 +97,6 @@ public class DetailContact extends AppCompatActivity {
 
 
         Intent intent = getIntent();
-        Bundle extras = getIntent().getExtras();
 
         if(intent != null)
         {
@@ -94,7 +105,7 @@ public class DetailContact extends AppCompatActivity {
             email = intent.getStringExtra("email");
             id = Integer.parseInt(intent.getStringExtra("id"));
             url = intent.getStringExtra("url");
-            //uri = Uri.parse(url);
+            uri = Uri.parse(url);
             //Contact1 contact = (Contact1) bundle.get("object_contact");
             binding.tvName.setText(name);
             binding.tvPhone.setText(phone);
@@ -124,7 +135,8 @@ public class DetailContact extends AppCompatActivity {
 //                url= extras.getString("url");
 //            }
 //            binding.imAvatar.setImageURI(Uri.parse(url));
-
+                Bitmap bitmap = BitmapFactory.decodeByteArray(getBytesArrayFromURI(uri) , 0, getBytesArrayFromURI(uri).length);
+                binding.imAvatar.setImageBitmap(bitmap);
         }
 
 

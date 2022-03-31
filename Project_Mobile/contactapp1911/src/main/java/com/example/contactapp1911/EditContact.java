@@ -4,14 +4,20 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 
 import com.example.contactapp1911.databinding.ActivityAddContactBinding;
 import com.example.contactapp1911.databinding.ActivityEditContactBinding;
+
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 
 public class EditContact extends AppCompatActivity {
 
@@ -23,6 +29,27 @@ public class EditContact extends AppCompatActivity {
     int id = -1;
     private AppDatabase appDatabase;
     private ContactDao contactDao;
+
+    public byte[] getBytesArrayFromURI(Uri uri) {
+        try {
+            InputStream inputStream = getContentResolver().openInputStream(uri);
+            ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
+            int bufferSize = 1024;
+            byte[] buffer = new byte[bufferSize];
+
+            int len = 0;
+            while ((len = inputStream.read(buffer)) != -1) {
+                byteBuffer.write(buffer, 0, len);
+            }
+
+            return byteBuffer.toByteArray();
+
+        }catch(Exception e) {
+            Log.d("exception", "Oops! Something went wrong.");
+        }
+        return null;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +71,8 @@ public class EditContact extends AppCompatActivity {
             binding.etName.setText(name);
             binding.etPhone.setText(phone);
             binding.etEmail.setText(email);
-            //binding.imAvatar.setImageURI(Uri.parse(url));
+            Bitmap bitmap = BitmapFactory.decodeByteArray(getBytesArrayFromURI(Uri.parse(url)) , 0, getBytesArrayFromURI(Uri.parse(url)).length);
+            binding.imAvatar.setImageBitmap(bitmap);
         }
         // chọn ảnh
         binding.btnPhoto.setOnClickListener(new View.OnClickListener() {

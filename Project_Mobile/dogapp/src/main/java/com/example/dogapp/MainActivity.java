@@ -2,7 +2,11 @@ package com.example.dogapp;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,10 +32,11 @@ public class MainActivity extends AppCompatActivity {
 //    private DogsApiService apiService;
 //    private List<DogBreed> dogs;
 //    private DogsAdapter dogsAdapter;
-    private DogsApi api;
-    private List<DogBreed> dogs = new ArrayList<>();
-    private DogsAdapter dogsAdapter;
-    private ActivityMainBinding binding;
+
+//    private DogsApi api;
+//    private List<DogBreed> dogs = new ArrayList<>();
+//    private DogsAdapter dogsAdapter;
+      private ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,26 +66,29 @@ public class MainActivity extends AppCompatActivity {
 //                        Log.d("DEBUG", e.getMessage());
 //                    }
 //                });
-        dogsAdapter = new DogsAdapter(dogs);
-        binding.rvDogs.setAdapter(dogsAdapter);
-        binding.rvDogs.setLayoutManager(new GridLayoutManager(this, 2));
 
-        api = DogsApiService.getApi();
-        api.getDogs()
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableSingleObserver<List<DogBreed>>() {
-                    @Override
-                    public void onSuccess(@NonNull List<DogBreed> dogBreeds) {
-                        dogs.clear();
-                        dogs.addAll(dogBreeds);
-                        dogsAdapter.notifyDataSetChanged();
-                    }
-
-                    @Override
-                    public void onError(@NonNull Throwable e) {
-                        Log.d("DEBUG", e.getMessage());
-                    }
-                });
+//        dogsAdapter = new DogsAdapter(dogs);
+//        binding.rvDogs.setAdapter(dogsAdapter);
+//        binding.rvDogs.setLayoutManager(new GridLayoutManager(this, 2));
+//
+//        api = DogsApiService.getApi();
+//        api.getDogs()
+//                .subscribeOn(Schedulers.newThread())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribeWith(new DisposableSingleObserver<List<DogBreed>>() {
+//                    @Override
+//                    public void onSuccess(@NonNull List<DogBreed> dogBreeds) {
+//                        dogs.clear();
+//                        dogs.addAll(dogBreeds);
+//                        dogsAdapter.notifyDataSetChanged();
+//                    }
+//
+//                    @Override
+//                    public void onError(@NonNull Throwable e) {
+//                        Log.d("DEBUG", e.getMessage());
+//                    }
+//                });
     }
+
+
 }

@@ -9,9 +9,99 @@
     android:layout_marginBottom="10dp">
 
     <LinearLayout
+        android:id="@+id/swipe"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/name_swipe"
+            android:text="husky1"
+            android:layout_marginTop="10dp"
+            android:textSize="20dp"
+
+            >
+
+        </TextView>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/origin_name"
+                android:text="origin:"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/origin_value"
+                android:text="origin"
+                android:textSize="20dp"
+                />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/life_name"
+                android:text="life_span:"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/life_value"
+                android:text="life_span"
+                android:textSize="20dp"
+                />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/description_name"
+                android:text="description:"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/description_value"
+                android:text="description"
+                android:textSize="20dp"
+                />
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/normal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone"
+        >
 
         <ImageView
             android:id="@+id/image"
@@ -30,7 +120,7 @@
                     android:id="@+id/name"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:text="Corgi"
+                    android:text="husky"
                     android:textColor="@color/black"
                     android:textSize="20dp"
                     android:paddingHorizontal="10dp" />
@@ -44,11 +134,13 @@
                 android:id="@+id/description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Cute"
+                android:text="description"
                 android:textSize="15dp"
                 android:paddingHorizontal="10dp"
                 android:ellipsize="end"
                 android:maxLines="1" />
         </LinearLayout>
     </LinearLayout>
+
+
 </androidx.cardview.widget.CardView>
