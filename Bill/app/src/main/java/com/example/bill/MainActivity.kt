@@ -39,13 +39,11 @@ import androidx.compose.ui.unit.sp
 import com.example.bill.ui.theme.BillTheme
 import kotlin.math.roundToInt
 
-
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-
             BillTheme {
                 // A surface container using the 'background' color from the theme
                 val totalPerPerson = remember()
@@ -90,7 +88,6 @@ class MainActivity : ComponentActivity() {
                         .fillMaxWidth(),
                     color = MaterialTheme.colors.background
                 ) {
-                    //Greeting("Android")
                         Column(
                             modifier = Modifier.height(300.dp),
                             verticalArrangement = Arrangement.Top,
