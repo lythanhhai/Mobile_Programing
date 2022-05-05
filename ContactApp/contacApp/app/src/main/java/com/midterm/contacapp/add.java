@@ -27,7 +27,7 @@ public class add extends AppCompatActivity {
         contactDAO = appDatabase.contactDAO();
         Intent intent = getIntent();
         if (intent != null){
-
+            
         }
         binding.bnAdd.setOnClickListener(new Button.OnClickListener() {
             @Override
